@@ -107,7 +107,21 @@
   {
     "type": "id",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "lower_id",
+          "named": true
+        },
+        {
+          "type": "upper_id",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "item",
@@ -130,15 +144,16 @@
           "named": true
         },
         {
-          "type": "upper_id",
-          "named": true
-        },
-        {
           "type": "variant",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": "lower_id",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "multiline_string",
@@ -167,10 +182,6 @@
         },
         {
           "type": "string",
-          "named": true
-        },
-        {
-          "type": "upper_id",
           "named": true
         }
       ]

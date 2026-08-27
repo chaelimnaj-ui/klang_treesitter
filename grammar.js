@@ -13,6 +13,7 @@
 // precedences will be the end of me
 //    tried not to vibe code any part of the code but im doing it for the precednece because i am 
 //    not about to learn how to properly parse a programming language from first principles
+// After several hours of this, im just going to vibe code it
 
 const PREC = {
   control: 1,
@@ -25,9 +26,6 @@ export default grammar({
 
   conflicts: $ => [
     [$.pat_atom, $.atom],
-    //[$.expr, $.atom],
-    //[$.ctor_pattern, $.pat_atom], 
-    //[$.pattern, $.expr],
   ],
 
   extras: $ => [
@@ -45,15 +43,7 @@ export default grammar({
     item: $ => choice(
       seq("let", $.pattern, "=", $.expr, ";"),
       seq("let", $.id, repeat1($.pattern), "=", $.expr, ";"),
-      seq(
-        "type", 
-        choice($.id, $.upper_id), 
-        repeat(choice($.id, $.upper_id)),
-        "=",
-        $.variant,
-        repeat(seq("|", $.variant)),
-        ";"
-      ),
+      seq("type", $.id, repeat($.id), "=", $.variant, repeat(seq("|", $.variant)), ";"),
       seq($.expr, ";"),
     ),
 
@@ -94,7 +84,7 @@ export default grammar({
     ctor_pattern: $ => prec.left(PREC.apply, seq($.upper_id, repeat1($.pat_atom))),
 
     pat_atom: $ => choice(
-      $.id, $.upper_id, "_", $.number, $.string, "true", "false", "[]",
+      $.id, "_", $.number, $.string, "true", "false", "[]",
       seq("(", $.pattern, ")"),
       seq("{", 
         optional(
@@ -109,8 +99,9 @@ export default grammar({
     binop: $ => choice("||", "&&", "==", "!=", "<", "<=", ">", ">="
              , "::", "+", "-", "*", "/", "%"),
     
-    id: $ => seq(/[a-z]/, /[a-zA-Z0-9_$]+/),
-    upper_id: $ => seq(/[A-Z]/, /[a-zA-Z0-9_$]+/),
+    id: $ => choice( $.lower_id, $.upper_id),
+    lower_id: $ => seq(/[a-z]/, /[a-zA-Z0-9_$]*/),
+    upper_id: $ => seq(/[A-Z]/, /[a-zA-Z0-9_$]*/),
     number: $ => /-?[0-9]+/,
     string: $ => choice($.multiline_string, $.singleline_string),
     singleline_string: $ => seq('"', /([^"\\]|\\.)*/, '"'),
