@@ -18,11 +18,57 @@
         },
         {
           "type": "SYMBOL",
+          "name": "ctor_pattern"
+        }
+      ]
+    },
+    "ctor_pattern": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PREC_LEFT",
+          "value": 2,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "upper_id"
+              },
+              {
+                "type": "REPEAT1",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "pat_atom"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "PREC_LEFT",
+          "value": 1,
+          "content": {
+            "type": "SYMBOL",
+            "name": "upper_id"
+          }
+        }
+      ]
+    },
+    "pat_atom": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
           "name": "id"
         },
         {
           "type": "SYMBOL",
           "name": "upper_id"
+        },
+        {
+          "type": "STRING",
+          "value": "_"
         },
         {
           "type": "SYMBOL",
@@ -31,6 +77,18 @@
         {
           "type": "SYMBOL",
           "name": "string"
+        },
+        {
+          "type": "STRING",
+          "value": "true"
+        },
+        {
+          "type": "STRING",
+          "value": "false"
+        },
+        {
+          "type": "STRING",
+          "value": "[]"
         }
       ]
     },
@@ -130,15 +188,15 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_string"
+          "name": "multiline_string"
         },
         {
           "type": "SYMBOL",
-          "name": "_multiline_string"
+          "name": "singleline_string"
         }
       ]
     },
-    "_string": {
+    "singleline_string": {
       "type": "SEQ",
       "members": [
         {
@@ -155,7 +213,7 @@
         }
       ]
     },
-    "_multiline_string": {
+    "multiline_string": {
       "type": "SEQ",
       "members": [
         {

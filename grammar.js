@@ -15,14 +15,20 @@ export default grammar({
   name: "klang",
 
   rules: {
-    source_file: $ => repeat($._definitions),
+    source_file: $ => repeat($._definitions), 
 
     _definitions: $ => choice(
       $.binop,
-      $.id,
-      $.upper_id,
-      $.number,
-      $.string,
+      $.ctor_pattern,
+    ),
+
+    ctor_pattern: $ => choice(
+      prec.left(2, seq($.upper_id, repeat1($.pat_atom))),
+      prec.left(1, $.upper_id),
+    ),
+
+    pat_atom: $ => choice(
+      $.id, $.upper_id, "_", $.number, $.string, "true", "false", "[]",
     ),
 
     binop: $ => choice("||", "&&", "==", "!=", "<", "<=", ">", ">="
@@ -31,8 +37,8 @@ export default grammar({
     id: $ => seq(/[a-z]/, /[a-zA-Z0-9_$]+/),
     upper_id: $ => seq(/[A-Z]/, /[a-zA-Z0-9_$]+/),
     number: $ => /-?[0-9]+/,
-    string: $ => choice($._multiline_string, $._string),
-    _string: $ => seq('"', /([^"\\]|\\.)*/, '"'),
-    _multiline_string: $ => seq('"""', /([^"\\]|\\.)*/, '"""'),
+    string: $ => choice($.multiline_string, $.singleline_string),
+    singleline_string: $ => seq('"', /([^"\\]|\\.)*/, '"'),
+    multiline_string: $ => seq('"""', /([^"\\]|\\.)*/, '"""'),
   }
 });
