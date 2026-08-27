@@ -1,0 +1,48 @@
+source       ::= (include | item)* EOF
+include      ::= "include" string ";"              # line directive expanded before parsing
+item         ::= "let" pattern "=" expr ";"
+              | "let" id pattern+ "=" expr ";"
+              | "type" id id* "=" variant ("|" variant)* ";"
+              | expr ";"
+variant      ::= id type_atom*
+type_atom    ::= id | "(" id id* ")"
+ 
+expr         ::= "fn" pattern+ "=>" expr
+              | "if" expr "then" expr "else" expr
+              | "match" expr "{" arm+ "}"
+              | "let" pattern "=" expr "in" expr
+              | expr binop expr
+              | expr postfix                      # function application
+              | postfix
+postfix      ::= atom ("." id)*                   # static record projection
+arm          ::= pattern "=>" expr ";"
+atom         ::= id | int | string | "true" | "false"
+              | "(" expr ")"
+              | "[" (expr ("," expr)*)? "]"
+              | "{" (id "=" expr ("," id "=" expr)*)? "}"
+              | "{" item* expr "}"
+ 
+pattern      ::= pattern "::" pattern              # right-associative
+              | ctor_pattern
+              | pat_atom
+ctor_pattern ::= UpperId pat_atom*
+pat_atom     ::= id | UpperId | "_" | int | string | "true" | "false"
+              | "[]"
+              | "(" pattern ")"
+              | "{" (id ("=" pattern)? ("," id ("=" pattern)?)*)? "}"
+ 
+binop        ::= "||" | "&&" | "==" | "!=" | "<" | "<=" | ">" | ">="
+              | "::" | "+" | "-" | "*" | "/" | "%"
+
+
+func-dynamic data types
+
+    Int
+    Bool
+    String
+    [a] or List a
+    a -> b
+
+KLang demo
+Slide 3-5 (22 of 24)
+func-dynamic partial EBNF source ::= ( include | item)* EOF include ::= "include" string ";" # line directive expanded before parsing item ::= "let" pattern "=" expr ";" | "let" id pattern+ "=" expr ";" | "type" id id* "=" variant ( "|" variant)* ";" | expr ";" variant ::= id type_atom* type_atom ::= id | "(" id id* ")" expr ::= "fn" pattern+ "=>" expr | "if" expr "then" expr "else" expr | "match" expr "{" arm+ "}" | "let" pattern "=" expr "in" expr | expr binop expr | expr postfix # function application | postfix postfix ::= atom ( "." id)* # static record projection arm ::= pattern "=>" expr ";" atom ::= id | int | string | "true" | "false" | "(" expr ")" | "[" ( expr ( "," expr )*)? "]" | "{" (id "=" expr ( "," id "=" expr )*)? "}" | "{" item* expr "}" pattern ::= pattern "::" pattern # right-associative | ctor_pattern | pat_atom ctor_pattern ::= UpperId pat_atom* pat_atom ::= id | UpperId | "_" | int | string | "true" | "false" | "[]" | "(" pattern ")" | "{" (id ( "=" pattern)? ( "," id ( "=" pattern)?)*)? "}" binop ::= "||" | "&&" | "==" | "!=" | "<" | "<=" | ">" | ">=" | "::" | "+" | "-" | "*" | "/" | "%" 
