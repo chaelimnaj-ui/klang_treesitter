@@ -15,15 +15,24 @@ export default grammar({
   name: "klang",
 
   rules: {
-    source_file: $ => repeat($.binop),
+    source_file: $ => repeat($._definitions),
+
+    _definitions: $ => choice(
+      $.binop,
+      $.id,
+      $.upper_id,
+      $.number,
+      $.string,
+    ),
 
     binop: $ => choice("||", "&&", "==", "!=", "<", "<=", ">", ">="
              , "::", "+", "-", "*", "/", "%"),
     
-    // basic regexes for now
-    id: $ => 
-    upper_id: $ =>
-    integer: $ =>
-    string: $ =>
+    id: $ => seq(/[a-z]/, /[a-zA-Z0-9_$]+/),
+    upper_id: $ => seq(/[A-Z]/, /[a-zA-Z0-9_$]+/),
+    number: $ => /-?[0-9]+/,
+    string: $ => choice($._multiline_string, $._string),
+    _string: $ => seq('"', /([^"\\]|\\.)*/, '"'),
+    _multiline_string: $ => seq('"""', /([^"\\]|\\.)*/, '"""'),
   }
 });

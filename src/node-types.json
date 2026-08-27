@@ -5,6 +5,11 @@
     "fields": {}
   },
   {
+    "type": "id",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "source_file",
     "named": true,
     "root": true,
@@ -16,12 +21,46 @@
         {
           "type": "binop",
           "named": true
+        },
+        {
+          "type": "id",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "upper_id",
+          "named": true
         }
       ]
     }
   },
   {
+    "type": "string",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "upper_id",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "!=",
+    "named": false
+  },
+  {
+    "type": "\"",
+    "named": false
+  },
+  {
+    "type": "\"\"\"",
     "named": false
   },
   {
@@ -71,6 +110,10 @@
   {
     "type": ">=",
     "named": false
+  },
+  {
+    "type": "number",
+    "named": true
   },
   {
     "type": "||",
