@@ -8,9 +8,15 @@
 // @ts-check
 
 // As direct a translation from klang's EBNF
+// regex f*cking sucks 
+// strings f*cking suck
 
 export default grammar({
   name: "klang",
+
+  extras: ($) => [
+    $.comment
+  ],
 
   rules: {
     source_file: $ => repeat($._definition),
@@ -20,10 +26,16 @@ export default grammar({
       $.item,
     ),
 
-    id: $ => seq(),
-    upper_id: $ => seq(),
-    int_type: $ => seq(),
-    string_type: $ => seq(),
+    comment: $ => token(
+      seq("#", /.*/),
+    ),
+    
+    id: $ => /^[a-z][a-zA-Z0-9_$]*$/,
+    upper_id: $ => /^[A-Z][a-zA-Z0-9_$]*$/,
+    int_type: $ => /^[+-]?\d+$/,
+    string_type: $ => choice($.single_line_string, $.multiline_string),
+    single_line_string: $ => seq('"', /([^"\\]|\\.)*/, '"'),
+    multiline_string: $ => seq('"""', /[\s\S]*?/, '"""'),
 
     include: $ => seq( "include", $.string_type, ";"),
 
