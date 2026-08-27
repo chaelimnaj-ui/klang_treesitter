@@ -14,6 +14,11 @@
 export default grammar({
   name: "klang",
 
+  extras: $ => [
+    /\s/,
+    $.comment,
+  ],
+
   rules: {
     source_file: $ => repeat($._definitions), 
 
@@ -40,5 +45,7 @@ export default grammar({
     string: $ => choice($.multiline_string, $.singleline_string),
     singleline_string: $ => seq('"', /([^"\\]|\\.)*/, '"'),
     multiline_string: $ => seq('"""', /([^"\\]|\\.)*/, '"""'),
+
+    comment: ($) => token(choice(seq("#", /.*/))),
   }
 });
