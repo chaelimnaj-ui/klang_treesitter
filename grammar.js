@@ -10,9 +10,25 @@
 // As direct a translation from klang's EBNF
 // regex f*cking sucks 
 // strings f*cking suck
+// precedences will be the end of me
+//    tried not to vibe code any part of the code but im doing it for the precednece because i am 
+//    not about to learn how to properly parse a programming language from first principles
+
+const PREC = {
+  control: 1,
+  binop: 2,
+  apply: 3,
+}
 
 export default grammar({
   name: "klang",
+
+  conflicts: $ => [
+    [$.pat_atom, $.atom],
+    //[$.expr, $.atom],
+    //[$.ctor_pattern, $.pat_atom], 
+    //[$.pattern, $.expr],
+  ],
 
   extras: $ => [
     /\s/,
@@ -23,7 +39,51 @@ export default grammar({
     source_file: $ => repeat($._definitions), 
 
     _definitions: $ => choice(
-      $.pattern,
+      $.item,
+    ),
+    
+    item: $ => choice(
+      seq("let", $.pattern, "=", $.expr, ";"),
+      seq("let", $.id, repeat1($.pattern), "=", $.expr, ";"),
+      seq(
+        "type", 
+        choice($.id, $.upper_id), 
+        repeat(choice($.id, $.upper_id)),
+        "=",
+        $.variant,
+        repeat(seq("|", $.variant)),
+        ";"
+      ),
+      seq($.expr, ";"),
+    ),
+
+    variant: $ => seq($.id, repeat($.type_atom)),
+    type_atom: $ => choice($.id, seq("(", $.id, repeat($.id), ")")),
+
+    expr: $ => choice(
+      prec.right(PREC.control, seq("fn", repeat1($.pattern), "=>", $.expr)),
+      prec.right(PREC.control, seq("if", $.expr, "then", $.expr, "else", $.expr)),
+      prec.right(PREC.control, seq("match", $.expr, "{", repeat1($.arm), "}")),
+      prec.right(PREC.control, seq("let", $.pattern, "=", $.expr, "in", $.expr)),
+      prec.left(PREC.binop, seq($.expr, $.binop, $.expr)),
+      prec.left(PREC.apply, seq($.expr, $.postfix)),
+      seq($.postfix),
+    ),
+    postfix: $ => prec.left(seq($.atom, repeat(seq(".", $.id)))),
+    arm: $ => seq($.pattern, "=>", $.expr, ";"),
+    atom: $ => choice(
+      $.id, $.number, $.string, "true", "false",
+      seq("(", $.expr, ")"),
+      seq("[", optional(seq($.expr, repeat(seq(",", $.expr)))), "]"),
+      seq("{",
+        optional(
+          seq($.id, "=", $.expr,
+            repeat(seq(",", $.id, "=", $.expr)),
+          ),
+        ),
+        "}",
+      ),
+      seq("{", repeat($.item), $.expr, "}"),
     ),
 
     pattern: $ => choice(
@@ -31,15 +91,19 @@ export default grammar({
       $.ctor_pattern, $.pat_atom,
     ),
 
-    ctor_pattern: $ => choice(
-      prec.left(2, seq($.upper_id, repeat1($.pat_atom))),
-      prec.left(1, $.upper_id),
-    ),
+    ctor_pattern: $ => prec.left(PREC.apply, seq($.upper_id, repeat1($.pat_atom))),
 
     pat_atom: $ => choice(
       $.id, $.upper_id, "_", $.number, $.string, "true", "false", "[]",
       seq("(", $.pattern, ")"),
-      seq("{", optional(seq($.id, optional(seq("=", $.pattern)), repeat(seq(",", $.id, optional(seq("=", $.pattern)))))), "}"),
+      seq("{", 
+        optional(
+          seq(
+            $.id, optional(seq("=", $.pattern)), 
+            repeat(seq(",", $.id, optional(seq("=", $.pattern))))
+          )
+        ),
+        "}"),
     ),
 
     binop: $ => choice("||", "&&", "==", "!=", "<", "<=", ">", ">="
