@@ -14,85 +14,16 @@
 export default grammar({
   name: "klang",
 
-  extras: ($) => [
-    $.comment
-  ],
-
   rules: {
-    source_file: $ => repeat($._definition),
+    source_file: $ => repeat($.binop),
 
-    _definition: $ => choice(
-      $.include,
-      $.item,
-    ),
-
-    comment: $ => token(
-      seq("#", /.*/),
-    ),
+    binop: $ => choice("||", "&&", "==", "!=", "<", "<=", ">", ">="
+             , "::", "+", "-", "*", "/", "%"),
     
-    id: $ => /^[a-z][a-zA-Z0-9_$]*$/,
-    upper_id: $ => /^[A-Z][a-zA-Z0-9_$]*$/,
-    int_type: $ => /^[+-]?\d+$/,
-    string_type: $ => choice($.single_line_string, $.multiline_string),
-    single_line_string: $ => seq('"', /([^"\\]|\\.)*/, '"'),
-    multiline_string: $ => seq('"""', /[\s\S]*?/, '"""'),
-
-    include: $ => seq( "include", $.string_type, ";"),
-
-    item: $ => choice(
-     seq ("type", $.pattern, "=", $.expr, ";"), 
-     seq ("type", $.id, repeat1($.pattern), "=", $.expr, ";"), 
-     seq ("type", $.id, repeat($.id), "=", $.variant, repeat(seq("|", $.variant)), ";"),
-     seq ($.expr, ";"),
-    ),
-
-    variant: $ => seq($.id, $.type_atom),
-
-    type_atom: $ => choice(
-      $.id, 
-      seq("(", $.id, repeat($.id), ")"),
-    ),
-
-    expr: $ => choice(
-      seq("fn", repeat1($.pattern), "=>", $.expr),
-      seq("if", $.expr, "then", $.expr, "else", $.expr),
-      seq("match", $.expr, "{", repeat1($.arm), "}"),
-      seq("let", $.pattern, "=", $.expr, "in", $.expr),
-      seq($.expr, $.binop, $.expr),
-      seq($.expr, $.postfix),   // function application
-      seq($.postfix),
-    ),
-
-    postfix: $ => seq($.atom, repeat(seq(".", $.id))),
-    arm: $ => seq($.pattern, "=>", $.expr, ";"),
-    
-    atom: $ => choice(
-      $.id, $.int_type, $.string_type, "true", "false", 
-      seq("(", $.expr, ")"),
-      seq("[", optional(seq($.expr, repeat(seq(",", $.expr)))), "]"),
-      seq("{", optional(seq($.id, "=", $.expr, repeat(seq(",", $.id, "=", $.expr)))), "}"),
-      seq("{", repeat($.item), $.expr, "}"),
-    ),
-
-    pattern: $ => choice(
-      seq($.pattern, "::", $.pattern),
-      $.ctor_pattern, $.pat_atom
-    ),
-
-    ctor_pattern: $ => seq($.upper_id, $.pat_atom),
-
-    pat_atom: $ => choice(
-      $.id, $.upper_id, "_",  $.int_type, $.string_type, "true", "false",
-      "[]",
-      seq("(", $.pattern, ")"),
-      seq("{", optional(seq($.id, optional(seq("=", $.pattern)))), 
-        optional(seq(",", $.id, optional(seq("=", $.pattern)))), "}"),
-    ),
-  
-    binop: $ => choice(
-      "||", "&&", "==", "!=", "<", "<=", ">", ">=",
-      "::", "+", "-", "*", "/", "%"
-    ),
-
+    // basic regexes for now
+    id: $ => 
+    upper_id: $ =>
+    integer: $ =>
+    string: $ =>
   }
 });
