@@ -1,10 +1,5 @@
 [
   {
-    "type": "binop",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "ctor_pattern",
     "named": true,
     "fields": {},
@@ -38,7 +33,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
@@ -50,11 +45,38 @@
           "named": true
         },
         {
+          "type": "pattern",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         },
         {
           "type": "upper_id",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "pattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "ctor_pattern",
+          "named": true
+        },
+        {
+          "type": "pat_atom",
+          "named": true
+        },
+        {
+          "type": "pattern",
           "named": true
         }
       ]
@@ -75,11 +97,7 @@
       "required": false,
       "types": [
         {
-          "type": "binop",
-          "named": true
-        },
-        {
-          "type": "ctor_pattern",
+          "type": "pattern",
           "named": true
         }
       ]
@@ -110,10 +128,6 @@
     "fields": {}
   },
   {
-    "type": "!=",
-    "named": false
-  },
-  {
     "type": "\"",
     "named": false
   },
@@ -122,27 +136,15 @@
     "named": false
   },
   {
-    "type": "%",
+    "type": "(",
     "named": false
   },
   {
-    "type": "&&",
+    "type": ")",
     "named": false
   },
   {
-    "type": "*",
-    "named": false
-  },
-  {
-    "type": "+",
-    "named": false
-  },
-  {
-    "type": "-",
-    "named": false
-  },
-  {
-    "type": "/",
+    "type": ",",
     "named": false
   },
   {
@@ -150,23 +152,7 @@
     "named": false
   },
   {
-    "type": "<",
-    "named": false
-  },
-  {
-    "type": "<=",
-    "named": false
-  },
-  {
-    "type": "==",
-    "named": false
-  },
-  {
-    "type": ">",
-    "named": false
-  },
-  {
-    "type": ">=",
+    "type": "=",
     "named": false
   },
   {
@@ -195,7 +181,11 @@
     "named": false
   },
   {
-    "type": "||",
+    "type": "{",
+    "named": false
+  },
+  {
+    "type": "}",
     "named": false
   }
 ]

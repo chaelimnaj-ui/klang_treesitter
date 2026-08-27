@@ -23,8 +23,12 @@ export default grammar({
     source_file: $ => repeat($._definitions), 
 
     _definitions: $ => choice(
-      $.binop,
-      $.ctor_pattern,
+      $.pattern,
+    ),
+
+    pattern: $ => choice(
+      prec.right(1, seq($.pattern, "::", $.pattern)),
+      $.ctor_pattern, $.pat_atom,
     ),
 
     ctor_pattern: $ => choice(
@@ -34,6 +38,8 @@ export default grammar({
 
     pat_atom: $ => choice(
       $.id, $.upper_id, "_", $.number, $.string, "true", "false", "[]",
+      seq("(", $.pattern, ")"),
+      seq("{", optional(seq($.id, optional(seq("=", $.pattern)), repeat(seq(",", $.id, optional(seq("=", $.pattern)))))), "}"),
     ),
 
     binop: $ => choice("||", "&&", "==", "!=", "<", "<=", ">", ">="
