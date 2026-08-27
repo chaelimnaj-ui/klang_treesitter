@@ -1,4 +1,4 @@
-""""A tree-sitter grammar for the custom upd dcs language called klang""""
+"""A tree-sitter grammar for the custom upd dcs language called klang"""
 
 from importlib.resources import files as _files
 
