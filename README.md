@@ -17,6 +17,38 @@ Not like I want this to be a serious project but like if you want to contribute 
 
 ## Usage
 
-TODO: Learn how to release the parser and actualy set it up no Neovim myself first.
+### Neovim Installation
 
-Putting this section here for future me. Can't do it now if I don't know how to set it up myself y'know.
+These can probably go anywhere in your nvim config, init.lua if you really don't know.
+
+```lua
+-- just so tree-sitter can actualy use .kl as klang
+vim.filetype.add({
+    extension = {
+        kl = "klang",
+    }
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'klang' },
+  callback = function() vim.treesitter.start() end,
+})
+
+
+vim.treesitter.language.register('klang', { 'kl' })
+
+-- install
+vim.api.nvim_create_autocmd('User', { pattern = 'TSUpdate',
+callback = function()
+  require('nvim-treesitter.parsers').zimbu = {
+    install_info = {
+      url = 'https://github.com/chaelimnaj-ui/klang_treesitter',
+      revision = HEAD,
+      queries = 'queries/nvim',
+    },
+  }
+end})
+
+```
+
+Then run `:TSInstall klang`
