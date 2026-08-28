@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-klang",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A tree-sitter grammar for the custom upd dcs language called klang",
   "type": "module",
   "repository": {

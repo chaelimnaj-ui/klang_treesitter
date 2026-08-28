@@ -1,11 +1,11 @@
 ; # syntax highlight queries
-; I am using the tree-sitter defaults in my cofig file which would explain why some entries look odd
+; Support for nvim-tree-sitter
 ; ## nodes
 (binop) @operator
 
 ; ## terminals
 ; ### named 
-(upper_id) @constructor 
+(upper_id) @constant
 (number) @number
 (string) @string
 (comment) @comment
@@ -26,7 +26,7 @@
 [
   "true"
   "false"
-] @constant
+] @boolean
 
 [
   "("
@@ -39,5 +39,6 @@
 
 [
   ";"
+  "."
 ] @punctuation.delimiter
 
