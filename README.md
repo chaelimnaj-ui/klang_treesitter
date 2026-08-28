@@ -20,6 +20,7 @@ Not like I want this to be a serious project but like if you want to contribute 
 ### Neovim Installation
 
 These can probably go anywhere in your nvim config, init.lua if you really don't know.
+If you have a similar file structure as mine, put yours in a lua file in the directory `after`
 
 ```lua
 -- just so tree-sitter can actualy use .kl as klang
@@ -52,3 +53,5 @@ end})
 ```
 
 Then run `:TSInstall klang`
+
+When there are updates, run `:TSUpdate`
