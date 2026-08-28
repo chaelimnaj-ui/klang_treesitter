@@ -7,7 +7,7 @@
       "title": "klang",
       "scope": "source.klang",
       "file-types": [
-        "klang"
+        "kl"
       ],
       "injection-regex": "^klang$",
       "class-name": "TreeSitterKlang"
