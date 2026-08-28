@@ -10,17 +10,18 @@
         "kl"
       ],
       "injection-regex": "^klang$",
-      "class-name": "TreeSitterKlang"
+      "class-name": "TreeSitterKlang",
+      "highlights": "queries/highlights.scm"
     }
   ],
   "metadata": {
     "version": "0.1.0",
     "license": "MIT",
-    "description": "\"A tree-sitter grammar for the custom upd dcs language called klang\"",
+    "description": "A tree-sitter grammar for the custom upd dcs language called klang",
     "authors": [
       {
-        "name": "\"Jan Michael Tauli\"",
-        "email": "\"jm1michael2@gmail.com\"",
+        "name": "Jan Michael Tauli",
+        "email": "jm1michael2@gmail.com",
         "url": ""
       }
     ],
