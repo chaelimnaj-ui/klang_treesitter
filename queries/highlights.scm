@@ -1,10 +1,11 @@
 ; # syntax highlight queries
+; I am using the tree-sitter defaults in my cofig file which would explain why some entries look odd
 ; ## nodes
-(binop) @binop
+(binop) @operator
 
 ; ## terminals
 ; ### named 
-(upper_id) @upper_id
+(upper_id) @constructor 
 (number) @number
 (string) @string
 (comment) @comment
@@ -14,15 +15,29 @@
   "else"
   "fn"
   "if"
+  "in"          ; this is a surprise tool that will help us later !
   "include"
   "let"
   "match"
   "then"
   "type"
-] @keywords
+] @keyword
 
 [
   "true"
   "false"
-] @bool
+] @constant
+
+[
+  "("
+  ")"
+  "["
+  "]"
+  "{"
+  "}"
+] @punctuation.bracket
+
+[
+  ";"
+] @punctuation.delimiter
 
