@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-klang
-        VERSION "0.1.0"
+        VERSION "0.2.0"
         DESCRIPTION "A tree-sitter grammar for the custom upd dcs language called klang"
         HOMEPAGE_URL "git@github.com:chaelimnaj-ui/klang_treesitter.git"
         LANGUAGES C)
