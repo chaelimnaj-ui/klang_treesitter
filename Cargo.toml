@@ -1,7 +1,7 @@
 [package]
 name = "tree-sitter-klang"
 description = "A tree-sitter grammar for the custom upd dcs language called klang"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["Jan Michael Tauli <jm1michael2@gmail.com>"]
 license = "MIT"
 readme = "README.md"
