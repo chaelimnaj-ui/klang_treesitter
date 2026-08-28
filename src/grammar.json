@@ -379,13 +379,17 @@
           }
         },
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "postfix"
-            }
-          ]
+          "type": "FIELD",
+          "name": "atomic",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "postfix"
+              }
+            ]
+          }
         }
       ]
     },

@@ -76,10 +76,21 @@
   {
     "type": "expr",
     "named": true,
-    "fields": {},
+    "fields": {
+      "atomic": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "postfix",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "arm",

@@ -13,10 +13,10 @@
 #define ALIAS_COUNT 0
 #define TOKEN_COUNT 48
 #define EXTERNAL_TOKEN_COUNT 0
-#define FIELD_COUNT 0
+#define FIELD_COUNT 1
 #define MAX_ALIAS_SEQUENCE_LENGTH 7
 #define MAX_RESERVED_WORD_SET_SIZE 0
-#define PRODUCTION_ID_COUNT 1
+#define PRODUCTION_ID_COUNT 2
 #define SUPERTYPE_COUNT 0
 
 enum ts_symbol_identifiers {
@@ -588,6 +588,24 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = false,
     .named = false,
   },
+};
+
+enum ts_field_identifiers {
+  field_atomic = 1,
+};
+
+static const char * const ts_field_names[] = {
+  [0] = NULL,
+  [field_atomic] = "atomic",
+};
+
+static const TSMapSlice ts_field_map_slices[PRODUCTION_ID_COUNT] = {
+  [1] = {.index = 0, .length = 1},
+};
+
+static const TSFieldMapEntry ts_field_map_entries[] = {
+  [0] =
+    {field_atomic, 0},
 };
 
 static const TSSymbol ts_alias_sequences[PRODUCTION_ID_COUNT][MAX_ALIAS_SEQUENCE_LENGTH] = {
@@ -14510,8 +14528,8 @@ static const TSParseActionEntry ts_parse_actions[] = {
   [311] = {.entry = {.count = 1, .reusable = false}}, SHIFT(193),
   [313] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_pat_atom, 1, 0, 0),
   [315] = {.entry = {.count = 2, .reusable = true}}, REDUCE(sym_atom, 1, 0, 0), REDUCE(sym_pat_atom, 1, 0, 0),
-  [318] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_expr, 1, 0, 0),
-  [320] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_expr, 1, 0, 0),
+  [318] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_expr, 1, 0, 1),
+  [320] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_expr, 1, 0, 1),
   [322] = {.entry = {.count = 2, .reusable = true}}, REDUCE(sym_atom, 2, 0, 0), REDUCE(sym_pat_atom, 2, 0, 0),
   [325] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_pat_atom, 2, 0, 0),
   [327] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_expr, 2, 0, 0),
@@ -14751,6 +14769,9 @@ TS_PUBLIC const TSLanguage *tree_sitter_klang(void) {
     .small_parse_table_map = ts_small_parse_table_map,
     .parse_actions = ts_parse_actions,
     .symbol_names = ts_symbol_names,
+    .field_names = ts_field_names,
+    .field_map_slices = ts_field_map_slices,
+    .field_map_entries = ts_field_map_entries,
     .symbol_metadata = ts_symbol_metadata,
     .public_symbol_map = ts_symbol_map,
     .alias_map = ts_non_terminal_alias_map,
@@ -14762,8 +14783,8 @@ TS_PUBLIC const TSLanguage *tree_sitter_klang(void) {
     .max_reserved_word_set_size = 0,
     .metadata = {
       .major_version = 0,
-      .minor_version = 1,
-      .patch_version = 0,
+      .minor_version = 2,
+      .patch_version = 2,
     },
   };
   return &language;

@@ -3,6 +3,32 @@
 ; ## nodes
 (binop) @operator
 
+; ## pattern matched
+; function delcarations
+(item
+  "let"
+  (pattern) @function
+  "="
+  (expr 
+    "fn"
+    (_)))
+
+(item
+  "let"
+  (id) @function
+  (pattern)+ @variable.parameter)
+
+(expr
+  "fn"
+  (pattern)+ @variable.parameter
+  (_))
+
+; function call
+(expr
+  (expr
+    atomic: (postfix) @function .)
+  (postfix))
+
 ; ## terminals
 ; ### named 
 (upper_id) @constructor 
