@@ -3,6 +3,30 @@
 ; ## nodes
 (binop) @operator
 
+; ## pattern matched
+; function delcarations
+(item
+  "let"
+  (pattern) @function
+  "="
+  (expr 
+    "fn"))
+
+(item
+  "let"
+  (id) @function
+  (pattern)+ @variable.parameter)
+
+(expr
+  "fn"
+  (pattern)+ @variable.parameter)
+
+; function call
+(expr
+  (expr
+    atomic: (postfix) @function .)
+  (postfix))
+
 ; ## terminals
 ; ### named 
 (upper_id) @constant
@@ -12,16 +36,25 @@
 
 ; ### anonymous
 [
-  "else"
-  "fn"
-  "if"
-  "in"          ; this is a surprise tool that will help us later !
-  "include"
+  "in"          
   "let"
-  "match"
-  "then"
   "type"
 ] @keyword
+
+[
+  "fn"
+] @keyword.funcion
+
+[
+  "include"
+] @keyword.import
+
+[
+  "if"
+  "else"
+  "then"
+  "match"
+] @keyword.conditional
 
 [
   "true"
