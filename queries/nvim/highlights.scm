@@ -24,7 +24,7 @@
 ; function call
 (expr
   (expr
-    atomic: (postfix) @function .)
+    atomic: (postfix) @function.call .)
   (postfix))
 
 ; ## terminals
@@ -54,6 +54,7 @@
   "else"
   "then"
   "match"
+  "=>"
 ] @keyword.conditional
 
 [
