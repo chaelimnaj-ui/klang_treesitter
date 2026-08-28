@@ -1,6 +1,6 @@
 LANGUAGE_NAME := tree-sitter-klang
 HOMEPAGE_URL := git@github.com:chaelimnaj-ui/klang_treesitter.git
-VERSION := 0.2.2
+VERSION := 0.2.3
 
 # repository
 SRC_DIR := src
