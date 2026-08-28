@@ -40,7 +40,7 @@ vim.treesitter.language.register('klang', { 'kl' })
 -- install
 vim.api.nvim_create_autocmd('User', { pattern = 'TSUpdate',
 callback = function()
-  require('nvim-treesitter.parsers').zimbu = {
+  require('nvim-treesitter.parsers').klang = {
     install_info = {
       url = 'https://github.com/chaelimnaj-ui/klang_treesitter',
       revision = HEAD,
