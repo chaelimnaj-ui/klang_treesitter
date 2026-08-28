@@ -10,8 +10,7 @@
   (pattern) @function
   "="
   (expr 
-    "fn"
-    (_)))
+    "fn"))
 
 (item
   "let"
@@ -20,8 +19,7 @@
 
 (expr
   "fn"
-  (pattern)+ @variable.parameter
-  (_))
+  (pattern)+ @variable.parameter)
 
 ; function call
 (expr
