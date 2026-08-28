@@ -37,8 +37,11 @@ export default grammar({
     source_file: $ => repeat($._definitions), 
 
     _definitions: $ => choice(
+      $.include,
       $.item,
     ),
+
+    include: $ => seq("include", $.string, ";"),
     
     item: $ => choice(
       seq("let", $.pattern, "=", $.expr, ";"),
