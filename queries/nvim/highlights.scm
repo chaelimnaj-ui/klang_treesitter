@@ -39,11 +39,12 @@
   "in"          
   "let"
   "type"
+  "=>"
 ] @keyword
 
 [
   "fn"
-] @keyword.funcion
+] @keyword.function
 
 [
   "include"
@@ -54,7 +55,6 @@
   "else"
   "then"
   "match"
-  "=>"
 ] @keyword.conditional
 
 [
