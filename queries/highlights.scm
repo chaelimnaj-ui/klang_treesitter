@@ -1,5 +1,6 @@
 ; # syntax highlight queries
 ; I am using the tree-sitter defaults in my cofig file which would explain why some entries look odd
+; [!warning] obsolete
 ; ## nodes
 (binop) @operator
 

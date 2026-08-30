@@ -152,7 +152,28 @@
   {
     "type": "item",
     "named": true,
-    "fields": {},
+    "fields": {
+      "param": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "id",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "id",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -239,17 +260,28 @@
   {
     "type": "postfix",
     "named": true,
-    "fields": {},
+    "fields": {
+      "static_access": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ".",
+            "named": false
+          },
+          {
+            "type": "id",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "atom",
-          "named": true
-        },
-        {
-          "type": "id",
           "named": true
         }
       ]

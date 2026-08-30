@@ -46,7 +46,7 @@ export default grammar({
     item: $ => choice(
       seq("let", $.pattern, "=", $.expr, ";"),
       seq("let", $.id, repeat1($.pattern), "=", $.expr, ";"),
-      seq("type", $.id, repeat($.id), "=", $.variant, repeat(seq("|", $.variant)), ";"),
+      seq("type", field("type", $.id), repeat(field("param", $.id)), "=", $.variant, repeat(seq("|", $.variant)), ";"),
       seq($.expr, ";"),
     ),
 
@@ -60,9 +60,9 @@ export default grammar({
       prec.right(PREC.control, seq("let", $.pattern, "=", $.expr, "in", $.expr)),
       prec.left(PREC.binop, seq($.expr, $.binop, $.expr)),
       prec.left(PREC.apply, seq($.expr, $.postfix)),
-      seq($.postfix),
+      field("atomic", seq($.postfix)),
     ),
-    postfix: $ => prec.left(seq($.atom, repeat(seq(".", $.id)))),
+    postfix: $ => prec.left(seq($.atom, field("static_access", repeat(seq(".", $.id))))),
     arm: $ => seq($.pattern, "=>", $.expr, ";"),
     atom: $ => choice(
       $.id, $.number, $.string, "true", "false",
