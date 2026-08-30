@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "tree-sitter-klang"
 description = "A tree-sitter grammar for the custom upd dcs language called klang"
-version = "0.2.5"
+version = "0.2.6"
 keywords = ["incremental", "parsing", "tree-sitter", "klang"]
 classifiers = [
   "Intended Audience :: Developers",
