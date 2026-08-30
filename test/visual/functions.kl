@@ -1,0 +1,57 @@
+# sand box
+
+include "../visual/functions.kl";
+
+type Option a b = Some a | None;
+
+let struct = { name="alice" };
+struct.name;
+
+# # This file tests as many function declarations as possible
+# ## What this test suite looks out for
+# expected id's are colored as functions
+# parameters id's are correctly colored
+
+# ## curried
+
+let test_1_curried = fn a => a;
+
+let test_2_curried = fn a => fn b => a :: b :: [];
+
+let test_3_curried = fn a => fn b => fn c => a :: b :: c :: [];
+
+test_1_curried a;
+test_2_curried a b;
+test_3_curried a b c;
+
+# ## fn aliased
+
+let test_1_fn_aliased = fn a b => a :: b :: [];
+let test_2_fn_aliased = fn a b c => a :: b :: c :: [];
+
+
+# ## let aliased
+
+let sanity_check = 10;
+
+let test_1_let_aliased a = a :: [];
+
+let test_2_let_aliased a b = a :: b :: [];
+
+
+# ## combination
+
+let test_1_combination a b = fn c d => fn e => [a, b, c, d, e];
+
+# ## sample
+# only focus on the function declarations
+
+let test_1_sample = match SomeTaggeedStruct a {
+    Option1 => fn b => b + 1;
+    Option2 c => fn d e => c + d + e;
+    Option3 f => {
+        let weird_func g h = fn i j => g + h + i + j;
+        weird_func
+    }
+}
+

@@ -2,6 +2,8 @@
 ; Support for nvim-tree-sitter
 ; ## Direct nodes and opertars
 (binop) @operator
+(id) @variable
+(upper_id) @constant
 
 [
 "="
@@ -36,15 +38,16 @@
   "let" 
   (id) @function 
   (pattern
-    pat_atom
+    (pat_atom
     (id) @variable.parameter)) 
+  )
 
 ; Variable binding to an anonymous function: `let my_func = fn ...`
 (item
   "let" .
   (pattern
-    pat_atom
-    (id) @function)
+    (pat_atom
+    (id) @function))
   "=" .
   (expr "fn"))
 
@@ -152,5 +155,3 @@
 ; ; Final fallback for standard variables.
 ; ; Because this is at the absolute bottom, it will only highlight 
 ; ; identifiers that weren't already tagged as functions, parameters, or properties above.
-(upper_id) @constant
-(id) @variable
